@@ -24,9 +24,28 @@
 </script>
 
 <style lang="stylus">
+  hover-bar-width = 8px
+
   .person
-    border: 1px solid gray
-    padding: 0.8em 1.2em
+    padding: 0.5em 1.2em 0.8em
+    position: relative
+    overflow: hidden
+
+    // Hover bar that shows in front of the person when hovered.
+    &::before
+      content: ''
+      position: absolute
+      height: 100%
+      width: hover-bar-width
+      top: 0
+      left: 0
+      transform: translateX(-(hover-bar-width))
+      background-color: person-hover-bar
+      transition: transform 70ms ease-out
+
+    &:hover::before {
+      transform: translateX(0)
+    }
 
     .name
       font-size: 1.6em

@@ -2,8 +2,11 @@
   .attribute(:title="tooltip")
     i.icon(:class="icon")
 
+    //- Element for the entire width of the bar.
     .bar-holder
+      //- The bar showing the attribute value as a percentage of the entire bar.
       .bar(:style="barStyle")
+      //- End cap for the bar, to make the end value easier to see.
       .bar-cap(:style="capStyle")
 
     span.value {{ value }}
@@ -73,7 +76,7 @@
 
     .bar-holder
       flex: 1
-      background-color: #DBDBDB
+      background-color: attribute-bar-holder
       height: bar-height
       display: flex
       align-items: center
@@ -82,8 +85,8 @@
       height: 100%
 
     .bar-cap
-      width: bar-height
-      height: bar-height
+      width: bar-height + 1
+      height: bar-height + 1
       filter: brightness(0.6)
 
     .value

@@ -45,7 +45,12 @@ module.exports = {
       },
       {
         test: /\.styl(us)?$/,
-        use: ['vue-style-loader', 'css-loader', 'stylus-loader']
+        use: ['vue-style-loader', 'css-loader', {
+          loader: 'stylus-loader',
+          options: {
+            import: path.resolve(__dirname, 'src', 'colors.styl')
+          }
+        }]
       }
     ]
   }
