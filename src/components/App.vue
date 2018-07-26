@@ -1,6 +1,6 @@
 <template lang="pug">
   #app
-    textarea {{ formattedData }}
+    textarea.input(v-model="formattedData")
 
     .people
       //- Team members
@@ -44,8 +44,21 @@
     },
 
     computed: {
-      formattedData() {
-        return JSON.stringify(this.data, undefined, 2)
+      formattedData: {
+        get() {
+          return JSON.stringify(this.data, undefined, 2)
+        },
+        set(value) {
+          try {
+            let json = JSON.parse(value)
+            this.team = json.team.map((x) => new PersonModel(x))
+            this.applicants = json.applicants.map((x) => new PersonModel(x))
+            this.data = json
+          }
+          catch (e) {
+            // Don't do anything since this will happen frequently as the user is editing the JSON.
+          }
+        }
       },
 
       teamAverage() {
@@ -79,6 +92,13 @@
     font-family: Verdana, Arial, sans-serif
     margin: 0
     background-color: body-background
+
+  .input
+    width: 100%
+    height: 20em
+    background-color: #242424
+    color: white
+    margin-bottom: 3em
 
   .people
     display: flex
