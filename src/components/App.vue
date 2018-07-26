@@ -16,15 +16,24 @@
           i.icon.fas.fa-user-edit
           | Applicants
         Person(v-for="applicant in applicants" :person="applicant" :key="applicant.key")
+
+      //- Applicant scores with breakdowns
+      .group.scorecards
+        .group-header
+          i.icon.fas.fa-clipboard-list
+          | Scores
+        Scorecard(v-for="score in scores" :score="score" :key="score.name")
 </template>
 
 <script>
   import sampleData from '../sample-data'
   import Person from './Person.vue'
+  import Scorecard from './Scorecard.vue'
   import PersonModel from '../models/Person'
+  import calculator from '../score-calculator.js'
 
   export default {
-    components: { Person },
+    components: { Person, Scorecard },
 
     data() {
       return {
@@ -37,6 +46,29 @@
     computed: {
       formattedData() {
         return JSON.stringify(this.data, undefined, 2)
+      },
+
+      teamAverage() {
+        let average = {}
+        let keys = Object.keys(this.team[0].attributes)
+
+        keys.forEach((key) => {
+          this.team.forEach((member) => {
+            average[key] = average[key] ? average[key] + member.attributes[key] : member.attributes[key]
+          })
+        })
+
+        for (let key in average) {
+          average[key] = average[key] / this.team.length
+        }
+
+        return average
+      },
+
+      scores() {
+        let scores = this.applicants.map((applicant) => calculator.getScore({ attributes: this.teamAverage }, applicant))
+
+        return scores
       }
     }
   }
@@ -45,10 +77,12 @@
 <style lang="stylus">
   body
     font-family: Verdana, Arial, sans-serif
+    margin: 0
+    background-color: body-background
 
   .people
     display: flex
-    max-width: 800px
+    max-width: 960px
     margin: 0 auto
 
   .group
@@ -67,7 +101,6 @@
       margin-right: 0.3em
 
   // Add a border between each person except for the last one.
-  .person:not(:last-of-type)
+  .person:not(:last-of-type), .scorecard:not(:last-of-type)
     border-bottom: 1px solid person-border
-
 </style>
