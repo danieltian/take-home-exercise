@@ -1,0 +1,28 @@
+{
+  "name": "take-home-exercise",
+  "version": "0.0.1",
+  "description": "Take home exercise for job interview",
+  "main": "server.js",
+  "scripts": {
+    "start": "webpack-dev-server"
+  },
+  "author": "Daniel Tian <dftian@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "css-loader": "^1.0.0",
+    "eslint": "^5.2.0",
+    "eslint-loader": "^2.1.0",
+    "eslint-plugin-vue": "^5.0.0-beta.0",
+    "html-webpack-plugin": "^3.2.0",
+    "pug": "^2.0.3",
+    "pug-plain-loader": "^1.0.0",
+    "stylus": "^0.54.5",
+    "stylus-loader": "^3.0.2",
+    "vue": "^2.5.16",
+    "vue-loader": "^15.2.6",
+    "vue-template-compiler": "^2.5.16",
+    "webpack": "^4.16.2",
+    "webpack-cli": "^3.1.0",
+    "webpack-dev-server": "^3.1.5"
+  }
+}
