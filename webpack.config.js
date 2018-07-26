@@ -21,7 +21,7 @@ module.exports = {
   ],
 
   devServer: {
-    hotOnly: true, // Enable hot module replacement with no fallback to page refresh.
+    hot: true, // Enable hot module replacement.
     overlay: true, // Show an overlay of any build errors in the browser.
     open: true, // Automatically open the browser when dev server is started.
     contentBase: path.resolve(__dirname, 'dist'), // Use dist folder as the root of the web server.
