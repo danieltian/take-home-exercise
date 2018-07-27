@@ -1,6 +1,6 @@
 <template lang="pug">
   #app
-    textarea.input(v-model="formattedData")
+    textarea.input(v-model="json")
 
     .columns
       //- Team members
@@ -32,23 +32,27 @@
 
     data() {
       return {
-        data: sampleData,
-        team: sampleData.team.map((x) => new Person(x)),
-        applicants: sampleData.applicants.map((x) => new Person(x))
+        data: sampleData
       }
     },
 
     computed: {
-      formattedData: {
+      team() {
+        return this.data.team.map((x) => new Person(x))
+      },
+
+      applicants() {
+        return this.data.team.map((x) => new Person(x))
+      },
+
+      json: {
         get() {
           return JSON.stringify(this.data, undefined, 2)
         },
+
         set(value) {
           try {
-            let json = JSON.parse(value)
-            this.team = json.team.map((x) => new Person(x))
-            this.applicants = json.applicants.map((x) => new Person(x))
-            this.data = json
+            this.data = JSON.parse(value)
           }
           catch (e) {
             // Don't do anything since this will happen frequently as the user is editing the JSON.
