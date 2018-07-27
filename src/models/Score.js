@@ -21,7 +21,7 @@ class Score {
     // and tapers off towards the end.
     let scaledScore = BetterMath.log10(total) / BetterMath.log10(max)
 
-    return scaledScore
+    return BetterMath.clamp(scaledScore, 0, 1)
   }
 
   setBreakdown(name, value) {

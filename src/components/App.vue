@@ -1,6 +1,6 @@
 <template lang="pug">
   #app
-    textarea.input(v-model="json")
+    textarea.textarea(v-model="jsonInput")
 
     .columns
       //- Team members
@@ -17,6 +17,8 @@
       .group.scorecards
         GroupHeader(icon="fas fa-clipboard-list" name="Scores")
         Scorecard(v-for="score in scores" :score="score" :key="score.name")
+
+    textarea.textarea {{ jsonOutput }}
 </template>
 
 <script>
@@ -45,7 +47,7 @@
         return this.data.applicants.map((x) => new Person(x))
       },
 
-      json: {
+      jsonInput: {
         get() {
           return JSON.stringify(this.data, undefined, 2)
         },
@@ -64,6 +66,10 @@
         let scores = calculator.getScores(this.team, this.applicants)
 
         return scores
+      },
+
+      jsonOutput() {
+        return JSON.stringify(this.scores, undefined, 2)
       }
     }
   }
@@ -79,17 +85,25 @@
     &.full-screen-drag
       user-select: none
 
-  .input
+  #app
+    display: flex
+    flex-direction: column
+    align-items: center
+    height: 100vh
+    overflow: hidden
+
+  .textarea
     width: 100%
-    height: 20em
-    background-color: json-input-background
-    color: white
-    margin-bottom: 3em
+    height: 15em
+    background-color: textarea-background
+    color: textarea-text
 
   .columns
     display: flex
+    align-items: center
     max-width: 960px
-    margin: 0 auto
+    width: 100%
+    flex: 1
 
   .group
     flex: 1
