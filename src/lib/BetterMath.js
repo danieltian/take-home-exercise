@@ -1,3 +1,4 @@
+// Create an object whose prototype is Math. We can't use a class and extend Math because it's not a function.
 let BetterMath = Object.create(Math)
 
 /**
@@ -23,7 +24,7 @@ BetterMath.clamp = function (value, lower, upper) {
  * // We should get 5, since 46 / 100 = 0.46, and rounding it up to the closest step is 5.
  */
 BetterMath.step = function (current, max, steps) {
-  return this.clamp(BetterMath.round(current / max * steps), 0, steps)
+  return this.clamp(this.round(current / max * steps), 0, steps)
 }
 
 module.exports = BetterMath
