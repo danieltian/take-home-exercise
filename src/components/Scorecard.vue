@@ -1,11 +1,11 @@
 <template lang="pug">
   .scorecard
-    .score {{ score.score.toFixed(2) }}
+    .score {{ score.score.toFixed(this.precision) }}
     .breakdown
-      Attribute(icon="fas fa-magic" :value="breakdown.intelligence" tooltip="Intelligence" barColor="19CF28" :editable="false" :precision="2")
-      Attribute(icon="fas fa-dumbbell" :value="breakdown.strength" tooltip="Strength" barColor="9E3FFC" :editable="false" :precision="2")
-      Attribute(icon="fas fa-swimmer" :value="breakdown.endurance" tooltip="Endurance" barColor="6682FF" :editable="false" :precision="2")
-      Attribute(icon="fab fa-hotjar" :value="breakdown.spicyFoodTolerance" tooltip="Spicy Food Tolerance" barColor="FC3F3F" :editable="false" :precision="2")
+      Attribute(icon="fas fa-magic" :value="breakdown.intelligence" tooltip="Intelligence" barColor="19CF28" :editable="false" :precision="this.precision")
+      Attribute(icon="fas fa-dumbbell" :value="breakdown.strength" tooltip="Strength" barColor="9E3FFC" :editable="false" :precision="this.precision")
+      Attribute(icon="fas fa-swimmer" :value="breakdown.endurance" tooltip="Endurance" barColor="6682FF" :editable="false" :precision="this.precision")
+      Attribute(icon="fab fa-hotjar" :value="breakdown.spicyFoodTolerance" tooltip="Spicy Food Tolerance" barColor="FC3F3F" :editable="false" :precision="this.precision")
 </template>
 
 <script>
@@ -18,6 +18,11 @@
       score: {
         type: Object,
         required: true
+      },
+
+      precision: {
+        type: Number,
+        default: 2
       }
     },
 
