@@ -10,7 +10,6 @@
 
 <script>
   import Attribute from './Attribute.vue'
-  import Vue from 'vue'
 
   export default {
     components: { Attribute },
@@ -31,23 +30,23 @@
 </script>
 
 <style lang="stylus">
-  hover-bar-width = 8px
+  hover-strip-width = 8px
 
   .person
     padding: 0.5em 1.2em 0.8em
     position: relative
     overflow: hidden
 
-    // Hover bar that shows in front of the person when hovered.
+    // Hover strip that shows in front of the person when hovered.
     &::before
       content: ''
       position: absolute
       height: 100%
-      width: hover-bar-width
+      width: hover-strip-width
       top: 0
       left: 0
-      transform: translateX(-(hover-bar-width))
-      background-color: person-hover-bar
+      transform: translateX(-(hover-strip-width))
+      background-color: person-hover-strip
       transition: transform 70ms ease-out
 
     &:hover::before {
