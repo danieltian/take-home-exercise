@@ -14,7 +14,7 @@
 </template>
 
 <script>
-  import BetterMath from '../BetterMath'
+  import BetterMath from '../lib/BetterMath'
 
   export default {
     props: {

@@ -30,7 +30,7 @@
   import Person from './Person.vue'
   import Scorecard from './Scorecard.vue'
   import PersonModel from '../models/Person'
-  import calculator from '../score-calculator.js'
+  import calculator from '../lib/ScoreCalculator.js'
 
   export default {
     components: { Person, Scorecard },
@@ -79,7 +79,7 @@
       },
 
       scores() {
-        let scores = this.applicants.map((applicant) => calculator.getScore({ attributes: this.teamAverage }, applicant))
+        let scores = calculator.getScores(this.team, this.applicants)
 
         return scores
       }
