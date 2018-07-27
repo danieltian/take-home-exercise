@@ -2,8 +2,9 @@
   .attribute(:title="tooltip" :class="{ editable }")
     i.icon(:class="icon")
 
-    //- Element for the entire width of the bar.
+    //- Click zone for the bar, larger than the visual representation of the bar.
     .bar-click-zone(ref="bar" @mousedown="onDragStart")
+      //- Element for the entire width of the bar.
       .bar-holder
         //- The bar showing the attribute value as a percentage of the entire bar.
         .bar(:style="barStyle")
@@ -55,16 +56,12 @@
     },
 
     computed: {
-      widthPercent() {
-        return this.value / this.max * 100
-      },
-
       color() {
         return this.barColor.startsWith('#') ? this.barColor : '#' + this.barColor
       },
 
       barStyle() {
-        return `width: ${this.widthPercent}%; background-color: ${this.color};`
+        return `width: ${this.value / this.max * 100}%; background-color: ${this.color};`
       },
 
       capStyle() {

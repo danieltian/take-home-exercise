@@ -1,5 +1,6 @@
 import BetterMath from '../lib/BetterMath'
 
+// Score object to hold the cumulative score, player name, and breakdown of each attribute and its individual score.
 class Score {
   constructor(options = {}) {
     this.name = options.name || ''
@@ -13,11 +14,12 @@ class Score {
   // Calculate the score from the breakdown.
   get score() {
     let keys = Object.keys(this.breakdown)
-    let totalScore = keys.reduce((sum, key) => sum + this.breakdown[key], 0)
-    let maxScore = keys.length * this.maxValuePerAttribute
+    let total = keys.reduce((sum, key) => sum + this.breakdown[key], 0)
+    // Maximum possible value.
+    let max = keys.length * this.maxValuePerAttribute
     // Calculate the score based on a logarithmic scale rather than a linear one so that the score increases quickly and
     // and tapers off towards the end.
-    let scaledScore = BetterMath.log10(totalScore) / BetterMath.log10(maxScore)
+    let scaledScore = BetterMath.log10(total) / BetterMath.log10(max)
 
     return scaledScore
   }
