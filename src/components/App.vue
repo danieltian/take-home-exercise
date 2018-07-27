@@ -93,6 +93,9 @@
     margin: 0
     background-color: body-background
 
+    &.full-screen-drag
+      user-select: none
+
   .input
     width: 100%
     height: 20em

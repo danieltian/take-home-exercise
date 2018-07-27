@@ -1,18 +1,21 @@
 <template lang="pug">
-  .attribute(:title="tooltip")
+  .attribute(:title="tooltip" :class="{ editable }")
     i.icon(:class="icon")
 
     //- Element for the entire width of the bar.
-    .bar-holder
-      //- The bar showing the attribute value as a percentage of the entire bar.
-      .bar(:style="barStyle")
-      //- End cap for the bar, to make the end value easier to see.
-      .bar-cap(:style="capStyle")
+    .bar-click-zone(ref="bar" @mousedown="onDragStart")
+      .bar-holder
+        //- The bar showing the attribute value as a percentage of the entire bar.
+        .bar(:style="barStyle")
+        //- End cap for the bar, to make the end value easier to see.
+        .bar-cap(:style="capStyle")
 
-    span.value {{ value }}
+    .value {{ value.toFixed(precision) }}
 </template>
 
 <script>
+  import BetterMath from '../BetterMath'
+
   export default {
     props: {
       icon: {
@@ -38,6 +41,16 @@
       max: {
         type: Number,
         default: 10
+      },
+
+      editable: {
+        type: Boolean,
+        default: true
+      },
+
+      precision: {
+        type: Number,
+        default: 0
       }
     },
 
@@ -57,6 +70,37 @@
       capStyle() {
         return `background-color: ${this.color};`
       }
+    },
+
+    methods: {
+      onDragStart(e) {
+        if (!this.editable) { return }
+
+        document.body.classList.add('full-screen-drag')
+
+        let position = this.$refs.bar.getBoundingClientRect()
+        // Run the function once to set the position on the initial click.
+        this.onMouseMove(e, position)
+        // Declare named functions so that removeEventListener can remove them properly.
+        let mouseMoveFn = (event) => this.onMouseMove(event, position)
+        let mouseUpFn = () => {
+          document.body.classList.remove('full-screen-drag')
+          document.removeEventListener('mousemove', mouseMoveFn)
+          document.removeEventListener('mouseup', mouseUpFn)
+        }
+
+        document.addEventListener('mousemove', mouseMoveFn)
+        document.addEventListener('mouseup', mouseUpFn)
+      },
+
+      onMouseMove(event, position) {
+        let pixelsFromLeft = event.screenX - position.left
+        let newValue = BetterMath.step(pixelsFromLeft, position.width, this.max)
+
+        if (this.value != newValue) {
+          this.$emit('update:value', newValue)
+        }
+      }
     }
   }
 </script>
@@ -66,16 +110,31 @@
 
   .attribute
     display: flex
-    align-items: center
     margin-bottom: 0.1em
+
+    &.editable:hover .bar-cap
+      transform: scale(1.4)
+
+    &.editable .bar-cap:active
+      transform: scale(1.6)
+      filter: brightness(0.4)
+
+    &.editable .bar-click-zone
+      cursor: pointer
 
     .icon
       width: 1.3em
-      text-align: right
+      text-align: center
+      align-self: center
       margin-right: 0.7em
 
-    .bar-holder
+    .bar-click-zone
       flex: 1
+      display: flex
+      align-items: center
+
+    .bar-holder
+      width: 100%
       background-color: attribute-bar-holder
       height: bar-height
       display: flex
@@ -83,11 +142,13 @@
 
     .bar
       height: 100%
+      transition: width 50ms ease-out
 
     .bar-cap
       width: bar-height + 1
       height: bar-height + 1
       filter: brightness(0.6)
+      transition: transform 70ms ease-out
 
     .value
       width: 1.6em

@@ -2,14 +2,15 @@
   .person
     .name {{ person.name }}
     .attributes
-      Attribute(icon="fas fa-magic" :value="person.intelligence" tooltip="Intelligence" barColor="19CF28")
-      Attribute(icon="fas fa-dumbbell" :value="person.strength" tooltip="Strength" barColor="9E3FFC")
-      Attribute(icon="fas fa-swimmer" :value="person.endurance" tooltip="Endurance" barColor="6682FF")
-      Attribute(icon="fab fa-hotjar" :value="person.spicyFoodTolerance" tooltip="Spicy Food Tolerance" barColor="FC3F3F")
+      Attribute(icon="fas fa-magic" :value.sync="attributes.intelligence" tooltip="Intelligence" barColor="19CF28")
+      Attribute(icon="fas fa-dumbbell" :value.sync="attributes.strength" tooltip="Strength" barColor="9E3FFC")
+      Attribute(icon="fas fa-swimmer" :value.sync="attributes.endurance" tooltip="Endurance" barColor="6682FF")
+      Attribute(icon="fab fa-hotjar" :value.sync="attributes.spicyFoodTolerance" tooltip="Spicy Food Tolerance" barColor="FC3F3F")
 </template>
 
 <script>
   import Attribute from './Attribute.vue'
+  import Vue from 'vue'
 
   export default {
     components: { Attribute },
@@ -18,6 +19,12 @@
       person: {
         type: Object,
         required: true
+      }
+    },
+
+    computed: {
+      attributes() {
+        return this.person.attributes
       }
     }
   }
