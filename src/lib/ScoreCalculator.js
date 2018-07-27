@@ -1,4 +1,5 @@
 import BetterMath from './BetterMath'
+import Score from '../models/Score'
 
 const COEFFICIENT = 9
 const COEFFICIENT_ATTRIBUTE_MODIFIER = 9
@@ -23,25 +24,21 @@ let ScoreCalculator = {
     return modifier * value
   },
 
-  getScoreHealth(score) {
-    return BetterMath.log10(score) / BetterMath.log10(MAX_SCORE)
-  },
+  /**
+   * Get the score for a person based on a collection of attributes to compare against.
+   * @param {Object} attributes - attributes to compare the person against
+   * @param {Object} person - person to get the score for
+   */
+  getScore(attributes, person) {
+    let score = new Score({ name: person.name })
 
-  getScore(average, person) {
-    let scoreObject = {
-      score: 0,
-      breakdown: {}
-    }
-
-    Object.keys(average).forEach((key) => {
-      let value = this.getAttributeScore(average[key], person.attributes[key])
-      scoreObject.breakdown[key] = value
-      scoreObject.score = scoreObject.score + value
+    // For each attribute for the person, get the score for that particular attribute as well as the cumulative score.
+    Object.keys(attributes).forEach((key) => {
+      let value = this.getAttributeScore(attributes[key], person.attributes[key])
+      score.setBreakdown(key, value)
     })
 
-    scoreObject.score = this.getScoreHealth(scoreObject.score)
-
-    return scoreObject
+    return score
   },
 
   getScores(team, applicants) {
