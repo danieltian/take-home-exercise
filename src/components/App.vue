@@ -4,21 +4,22 @@
       .text-label Input
       textarea.textarea(v-model="jsonInput")
 
-    .columns
-      //- Team members
-      .group.team
-        GroupHeader(icon="fas fa-users" name="Team Members")
-        Person(v-for="teamMember in team" :person="teamMember" :key="teamMember.key")
+    .columns-wrapper
+      .columns
+        //- Team members
+        .group.team
+          GroupHeader(icon="fas fa-users" name="Team Members")
+          Person(v-for="teamMember in team" :person="teamMember" :key="teamMember.key")
 
-      //- Applicants
-      .group.applicants
-        GroupHeader(icon="fas fa-user-edit" name="Applicants")
-        Person(v-for="applicant in applicants" :person="applicant" :key="applicant.key")
+        //- Applicants
+        .group.applicants
+          GroupHeader(icon="fas fa-user-edit" name="Applicants")
+          Person(v-for="applicant in applicants" :person="applicant" :key="applicant.key")
 
-      //- Applicant scores with breakdowns
-      .group.scorecards
-        GroupHeader(icon="fas fa-clipboard-list" name="Scores")
-        Scorecard(v-for="score in scores" :score="score" :key="score.name")
+        //- Applicant scores with breakdowns
+        .group.scorecards
+          GroupHeader(icon="fas fa-clipboard-list" name="Scores")
+          Scorecard(v-for="score in scores" :score="score" :key="score.name")
 
     .text
       .text-label Output
@@ -105,6 +106,7 @@
     font-weight: bold
     text-transform: uppercase
     text-align: center
+    padding-top: 0.5em
 
   .textarea
     width: 25em
@@ -114,11 +116,16 @@
     outline: none
     flex: 1
 
+  .columns-wrapper
+    border: 5px solid columns-border
+    flex: 1
+
   .columns
     display: flex
     padding: 0 3em
-    flex: 1
-    border: 5px solid columns-border
+    margin: 0 auto
+    max-width: 1200px
+    height: 100%
 
   .group
     flex: 1
