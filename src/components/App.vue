@@ -2,7 +2,7 @@
   #app
     textarea.input(v-model="formattedData")
 
-    .people
+    .columns
       //- Team members
       .group.team
         .group-header
@@ -103,13 +103,17 @@
     color: white
     margin-bottom: 3em
 
-  .people
+  .columns
     display: flex
     max-width: 960px
     margin: 0 auto
 
   .group
     flex: 1
+
+    &.team
+      padding-right: 2em
+      border-right: 2px solid person-border
 
     &:not(:last-of-type)
       margin-right: 2em
