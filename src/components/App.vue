@@ -42,7 +42,7 @@
       },
 
       applicants() {
-        return this.data.team.map((x) => new Person(x))
+        return this.data.applicants.map((x) => new Person(x))
       },
 
       json: {
