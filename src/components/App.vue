@@ -61,23 +61,6 @@
         }
       },
 
-      teamAverage() {
-        let average = {}
-        let keys = Object.keys(this.team[0].attributes)
-
-        keys.forEach((key) => {
-          this.team.forEach((member) => {
-            average[key] = average[key] ? average[key] + member.attributes[key] : member.attributes[key]
-          })
-        })
-
-        for (let key in average) {
-          average[key] = average[key] / this.team.length
-        }
-
-        return average
-      },
-
       scores() {
         let scores = calculator.getScores(this.team, this.applicants)
 
