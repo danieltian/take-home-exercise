@@ -3,6 +3,7 @@ import BetterMath from './BetterMath'
 const COEFFICIENT = 9
 const COEFFICIENT_ATTRIBUTE_MODIFIER = 9
 const MAX_VALUE = 10
+const MAX_SCORE = 40
 
 let ScoreCalculator = {
   getModifier(value) {
@@ -22,6 +23,10 @@ let ScoreCalculator = {
     return modifier * value
   },
 
+  getScoreHealth(score) {
+    return BetterMath.log10(score) / BetterMath.log10(MAX_SCORE)
+  },
+
   getScore(average, person) {
     let scoreObject = {
       score: 0,
@@ -33,6 +38,8 @@ let ScoreCalculator = {
       scoreObject.breakdown[key] = value
       scoreObject.score = scoreObject.score + value
     })
+
+    scoreObject.score = this.getScoreHealth(scoreObject.score)
 
     return scoreObject
   },
@@ -54,8 +61,6 @@ let ScoreCalculator = {
       average[key] = BetterMath.clamp(teamSum[key] / team.length, 0, MAX_VALUE)
       return average
     }, {})
-
-    console.log('team average', teamAverage)
 
     let scores = applicants.map((applicant) => {
       let scoreObject = this.getScore(teamAverage, applicant)
