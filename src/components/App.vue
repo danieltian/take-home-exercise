@@ -1,6 +1,8 @@
 <template lang="pug">
   #app
-    textarea.textarea(v-model="jsonInput")
+    .text
+      .text-label Input
+      textarea.textarea(v-model="jsonInput")
 
     .columns
       //- Team members
@@ -18,7 +20,9 @@
         GroupHeader(icon="fas fa-clipboard-list" name="Scores")
         Scorecard(v-for="score in scores" :score="score" :key="score.name")
 
-    textarea.textarea {{ jsonOutput }}
+    .text
+      .text-label Output
+      textarea.textarea {{ jsonOutput }}
 </template>
 
 <script>
@@ -87,26 +91,39 @@
 
   #app
     display: flex
-    flex-direction: column
-    align-items: center
     height: 100vh
-    overflow: hidden
+    width: 100vw
 
-  .textarea
-    width: 100%
-    height: 15em
+  .text
+    display: flex
+    flex-direction: column
+
+  .text-label
     background-color: textarea-background
     color: textarea-text
+    font-size: 1.4em
+    font-weight: bold
+    text-transform: uppercase
+    text-align: center
+
+  .textarea
+    width: 25em
+    background-color: textarea-background
+    color: textarea-text
+    border: none
+    outline: none
+    flex: 1
 
   .columns
     display: flex
-    align-items: center
-    max-width: 960px
-    width: 100%
+    padding: 0 3em
     flex: 1
+    border: 5px solid columns-border
 
   .group
     flex: 1
+    overflow: auto
+    padding-top: 2.5em
 
     // Add some more spacing and a divider between the team members and the applicants and their scores.
     &.team

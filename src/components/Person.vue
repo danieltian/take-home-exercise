@@ -35,7 +35,6 @@
   .person
     padding: 0.5em 1.2em 0.8em
     position: relative
-    overflow: hidden
 
     // Hover strip that shows in front of the person when hovered.
     &::before
