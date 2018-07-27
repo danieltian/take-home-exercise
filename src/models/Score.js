@@ -7,8 +7,6 @@ class Score {
     this.breakdown = options.breakdown || {}
     this.maxValuePerAttribute = options.maxValuePerAttribute || 10
     Object.assign(this, options)
-    // We'll use the name and a somewhat random string for the key.
-    this.key = `${this.name}:${Math.random()}`
   }
 
   // Calculate the score from the breakdown.
@@ -22,6 +20,10 @@ class Score {
     let scaledScore = BetterMath.log10(total) / BetterMath.log10(max)
 
     return BetterMath.clamp(scaledScore, 0, 1)
+  }
+
+  get key() {
+    this.key = `${this.name}:${Math.random()}`
   }
 
   setBreakdown(name, value) {
