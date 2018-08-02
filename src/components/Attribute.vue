@@ -91,8 +91,8 @@
       },
 
       onMouseMove(event, position) {
-        let pixelsFromLeft = event.screenX - position.left
-        let newValue = BetterMath.step(pixelsFromLeft, position.width, this.max)
+        let pixelsFromLeftEdgeOfBar = event.clientX - position.left
+        let newValue = BetterMath.step(pixelsFromLeftEdgeOfBar, position.width, this.max)
 
         if (this.value != newValue) {
           this.$emit('update:value', newValue)
